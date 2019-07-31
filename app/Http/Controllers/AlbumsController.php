@@ -15,6 +15,25 @@ class AlbumsController extends Controller
     }
 
     public function store(Request $request) {
-        return 1;
+        $this->validate($request, [
+            'name' => 'required',
+            'cover_img' => 'image|max:1999',
+        ]);
+
+        // Get filename with extension
+        $filenameWithExt = $request->file('cover_img')->getClientOriginalName();
+
+        // Get only filename
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        // Get extension
+        $extension = $request->file('cover_img')->getClientOriginalExtension();
+
+        // Create new filename
+        $filenameToStore = $filename.'_'.time().'.'.$extension;
+
+        // Upload image
+        $path = $request->file('cover_img')->storeAs('public/album_covers', $filenameToStore);
+
+        return $path;
     }
 }
