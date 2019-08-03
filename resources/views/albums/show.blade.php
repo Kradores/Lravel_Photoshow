@@ -44,4 +44,9 @@
     @else
         <p>No Photos To Display</p>
     @endif
+    <hr>
+    {!! Form::open(['action' => ['AlbumsController@destroy', $album->id], 'method' => 'POST']) !!}
+        {!! Form::hidden('_method', 'DELETE') !!}
+        {!! Form::submit('Delete Album', ['class' => 'button alert']) !!}
+    {!! Form::close() !!}
 @endsection
