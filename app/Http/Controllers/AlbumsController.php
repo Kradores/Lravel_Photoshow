@@ -46,4 +46,9 @@ class AlbumsController extends Controller
 
         return redirect('/')->with('success', 'Album Created');
     }
+
+    public function show($id) {
+        $album = Album::with('Photos')->find($id);
+        return view('albums.show')->with('album', $album);
+    }
 }
